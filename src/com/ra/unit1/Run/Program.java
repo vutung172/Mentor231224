@@ -43,11 +43,13 @@ public class Program {
 
                     break;
                 case 2:
-                    managerHotel.delete();
+                    System.out.println("Nhập vào số CMND muốn xóa:");
+                    String id = sc.nextLine();
+                    managerHotel.delete(id);
                     break;
                 case 3:
                     System.out.println("Nhập vào số CMND muốn tính tiền: ");
-                    String id = sc.nextLine();
+                    id = sc.nextLine();
                     Room roomCheckOut = new Room();
                     System.out.printf("%s | %s | %s | %s | %s |\n","Số phòng","Loại phòng","Giá thuê","Tên khách","Thời gian check-in");
                     int count = 0;
@@ -75,9 +77,15 @@ public class Program {
                                             managerHotel.checkOut(r);
                                             r.calRent();
                                             System.out.printf("%8s | %8s | %s USD | %15s | %20s | %20s | %.1fs | %.3f USD |\n",r.getNumber(),r.getType(),r.getPrice(),r.getCustomer().getName(),r.getCheckInTime(),r.getCheckOutTime(),r.getRentday(),managerHotel.calRent(r.getRentday(),r.getPrice()));
+                                            System.out.println("Thực hiện check-out không?(Y/S)");
+                                            String confirm = sc.nextLine();
+                                            if (confirm.equalsIgnoreCase("y")){
+                                                r.setCustomer(null);
+                                            }
                                         }
                                     }
                                 }
+
                                 break;
                             case 2:
                                 System.out.println("Nhập ngày giờ trả phòng (dd-MM-yyyy HH:mm:ss)");
@@ -89,6 +97,11 @@ public class Program {
                                             r.setCheckOutTime(checkOut);
                                             r.calRent();
                                             System.out.printf("%8s | %12s | %10s USD | %15s | %20s | %20s | %.1fs | %.3f USD |\n",r.getNumber(),r.getType(),r.getPrice(),r.getCustomer().getName(),r.getCheckInTime(),r.getCheckOutTime(),r.getRentday(),managerHotel.calRent(r.getRentday(),r.getPrice()));
+                                            System.out.println("Thực hiện check-out không?(Y/S)");
+                                            String confirm = sc.nextLine();
+                                            if (confirm.equalsIgnoreCase("y")){
+                                                r.setCustomer(null);
+                                            }
                                         }
                                     }
                                 }
@@ -108,6 +121,7 @@ public class Program {
                         case 1:
                             System.out.println("Nhập vào CMND muốn tìm: ");
                             String cmnd = sc.nextLine();
+                            System.out.printf("%10s | %15s | %8s |\n","Số CMND","Tên khách","Tuổi");
                             managerHotel.showByCMND(cmnd);
                             break;
                         case 2:

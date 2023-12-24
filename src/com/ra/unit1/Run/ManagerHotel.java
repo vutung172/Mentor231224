@@ -42,15 +42,20 @@ public class ManagerHotel implements IManager {
     }
 
     @Override
-    public void delete() {
-        System.out.println("Nhập vào số CMND muốn xóa:");
-        String id = sc.nextLine();
-        customers.forEach(c -> {
+    public void delete(String id) {
+        for (Customer c:customers) {
             if (c.getId().equals(id)){
                 customers.remove(c);
                 System.out.println("Xóa thành công");
+                for (Room r:rooms
+                     ) {
+                    if (r.getCustomer().getId().equals(id)){
+                        r.setCustomer(null);
+                    }
+                }
+                break;
             }
-        });
+        }
     }
 
     public void show(){
@@ -91,16 +96,16 @@ public class ManagerHotel implements IManager {
     public void showByRoomNumber(String id){
         int count = 0;
         for (Room r:rooms) {
-            if (r.getCustomer() != null){
-                if (r.getNumber().equals(id)){
+            if(r.getNumber().equals(id)){
+                if (r.getCustomer() != null){
+                    System.out.printf("%8s | %10s | %8s | %15s | %20s | %20s | %10s |\n","Số phòng","Loại phòng","Giá phòng","Tên khách","Thời gian check-in","Thời gian check-out","Số ngày thuê");
                     r.output();
                     count++;
-                    break;
+                } else {
+                    System.out.printf("%s | %s | %s | %s | %s |\n","Số phòng","Loại Phòng","Giá","Tên khách","Số ngày thuê");
+                    System.out.printf("%s | %s | %s | %s | %s |\n",r.getNumber(),r.getType(),r.getPrice(),"Chưa có khách",r.getRentday());
+                    count++;
                 }
-            } else {
-                System.out.printf("%s | %s | %s | %s | %s |\n",r.getNumber(),r.getType(),r.getPrice(),"Chưa có khách",r.getRentday());
-                count++;
-                break;
             }
         }
         if (count == 0){
@@ -119,7 +124,6 @@ public class ManagerHotel implements IManager {
         CurentTime curentTime = new CurentTime();
         curentTime.curentTime();
         room.setCheckOutTime(curentTime.getCurrent());
-
     }
 
 }

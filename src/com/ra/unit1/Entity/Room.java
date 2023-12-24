@@ -91,7 +91,7 @@ public class Room implements IHotel{
 
     @Override
     public void output() {
-        System.out.printf("%8s56666 | %10s | %8s | %15s | %20s | %20s | %.1f |\n",this.number,this.type,this.price,this.customer.getName(),this.checkInTime,this.checkOutTime,this.rentday);
+        System.out.printf("%8s | %10s | %8s | %15s | %20s | %20s | %.1f |\n",this.number,this.type,this.price,this.customer.getName(),this.checkInTime,this.checkOutTime,this.rentday);
     }
 
     public void calRent() throws ParseException {
