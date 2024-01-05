@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class VehicleManagement {
-    private List<Vehicle> vehicles = new ArrayList<>();
+    List<Vehicle> vehicles = new ArrayList<>();
+    private int count = 0;
 
     public List<Vehicle> getVehicles() {
         return vehicles;
@@ -19,7 +20,6 @@ public class VehicleManagement {
     }
 
     public void add(Vehicle obj) {
-        int count = 0;
         for (Vehicle v : vehicles) {
             if (v.getId().equals(obj.getId())) {
                 System.err.println("Đối tượng đã tồn tại, không thế thêm");
@@ -32,13 +32,15 @@ public class VehicleManagement {
         }
     }
 
+    //Thêm method findById(String id) boolean
+
     public void delete(String id) {
-        int count = 0;
         for (Vehicle v : vehicles) {
             if (v.getId().equals(id)) {
                 vehicles.remove(v);
                 System.err.println("Xóa thành công");
                 count++;
+                break;
             }
         }
         if (count == 0) {
@@ -56,7 +58,10 @@ public class VehicleManagement {
     public void sortByPrice(String s) {
         switch (s) {
             case "ASC":
-                if (vehicles != null) {
+                /*if (vehicles != null) {*/
+                //DÙng hàm sort (Sử dụng comparator)
+
+                if (!vehicles.isEmpty()) {
                     for (int i = 0; i < vehicles.size(); i++) {
                         for (int j = i + 1; j < vehicles.size(); j++) {
                             if (vehicles.get(i).getPrice() > vehicles.get(j).getPrice()) {
@@ -71,7 +76,7 @@ public class VehicleManagement {
                 }
                 break;
             case "DESC":
-                if (vehicles != null) {
+                if (!vehicles.isEmpty()) {
                     for (int i = 0; i < vehicles.size(); i++) {
                         for (int j = i + 1; j < vehicles.size(); j++) {
                             if (vehicles.get(i).getPrice() < vehicles.get(j).getPrice()) {
@@ -91,7 +96,6 @@ public class VehicleManagement {
     }
 
     public <T> void searchByBrand(String s, T type) {
-        int count = 0;
         for (Vehicle v : vehicles) {
             if (v.getClass().equals(type.getClass())) {
                 if (v.getBrand().contains(s)) {
@@ -106,7 +110,6 @@ public class VehicleManagement {
     }
 
     public <T> void searchByColor(String s, T type) {
-        int count =0;
         for (Vehicle v : vehicles) {
             if (v.getClass().equals(type.getClass())) {
                 if (v.getColor().contains(s)) {
